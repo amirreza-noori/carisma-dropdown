@@ -1,0 +1,122 @@
+@use 'sass:color';
+
+.container {
+	$border-color: lightblue;
+	$border-radius: 5px;
+
+	position: relative;
+	width: 100%;
+	user-select: none;
+
+	.input {
+		position: relative;
+		display: flex;
+		border: 1px solid $border-color;
+		border-radius: $border-radius;
+		padding: 7px 60px 7px 10px;
+		cursor: pointer;
+
+		&::after {
+			content: '🔻';
+			display: block;
+			position: absolute;
+			top: 50%;
+			right: 5px;
+			transform: translateY(-50%);
+			color: $border-color;
+			opacity: 0.5;
+			filter: hue-rotate(200deg);
+		}
+
+		&:hover {
+			$hover-color: color.adjust($border-color, $lightness: -30%);
+			border-color: $hover-color;
+			&::after {
+				opacity: 1;
+			}
+		}
+
+		.placeholder {
+			color: gray;
+		}
+	}
+
+	.clear {
+		position: absolute;
+		padding: 5px;
+		border: 0;
+		border-radius: 50%;
+		top: 50%;
+		right: 30px;
+		transform: translateY(-50%);
+		background-color: color.adjust($border-color, $lightness: 18%);
+		filter: hue-rotate(200deg);
+		font-size: 10px;
+		opacity: 0.7;
+		cursor: pointer;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+
+	.list {
+		position: absolute;
+		top: 100%;
+		margin-top: 2px;
+		left: 0;
+		right: 0;
+		border: 1px solid $border-color;
+		border-radius: $border-radius;
+		overflow: hidden;
+		background: white;
+		z-index: 1000;
+
+		> input {
+			box-sizing: border-box;
+			outline: none;
+			border: 0;
+			border-bottom: 1px solid $border-color;
+			width: 100%;
+			padding: 7px 10px;
+			border-radius: $border-radius $border-radius 0 0;
+		}
+
+		> ul {
+			display: block;
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			cursor: pointer;
+			max-height: 200px;
+			overflow-y: auto;
+
+			> li {
+				display: block;
+				padding: 5px 7px;
+				margin: 0;
+				&:hover {
+					background-color: color.adjust(
+						$border-color,
+						$lightness: 16%
+					);
+				}
+
+				&::before {
+					content: '🟩';
+					filter: grayscale(1) opacity(0.5);
+				}
+
+				&.checked::before {
+					content: '✅';
+					filter: none;
+				}
+			}
+		}
+
+		.notFound {
+			padding: 20px;
+			text-align: center;
+		}
+	}
+}
